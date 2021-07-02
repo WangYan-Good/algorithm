@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1605309766 source:d:\workfiles\progress\c or c++\linklist\main.cpp
+	<iostream>
+	"LinkList.h"
+
+1605309718 d:\workfiles\progress\c or c++\linklist\linklist.h
+	<stdio.h>
+
