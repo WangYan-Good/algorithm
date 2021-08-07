@@ -1,20 +1,6 @@
 #include <iostream>
-#include "LinkList.h"
-
+#include "Includes/LinkList.h"
 using namespace std;
-
-void CreateLinkList(LNode *Header)
-{
-    ElemType data;
-    printf("input data:");
-    scanf("%d",&data);
-    LNode *p;
-    p = new LNode;
-    p->data = data;
-    p->next = NULL;
-    Header ->next = p;
-    printf("success!\n");
-}
 
 int main()
 {

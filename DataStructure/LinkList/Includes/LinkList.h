@@ -1,31 +1,21 @@
 #include<stdio.h>
-#define ElemType int
-#define Status   bool
-#define OK       1
-#define False    0
+#define  ElemType int
+#define  Status   bool
+#define  OK       1
+#define  False    0
+#define  IN
+#define  OUT
 
+/**
+  Link List Node structure
+**/
 typedef struct LNode{
     ElemType data;
     struct LNode *next;
 }LNode,*LinkList;
 
-Status InitList(LinkList &L)
-{
-    L = new LNode;
-    L->next = NULL;
-    printf("finish!\n");
-    return OK;
-}
+Status CreateLinkList( OUT LNode *Header);
 
-Status DestroyList(LinkList &L)
-{
-    LNode *p = L;
-    LNode *aft = p->next;
-    while(p->next != NULL)
-    {
-        delete(p);
-        p = aft;
-        aft = aft->next;
-    }
-    printf("LinkList destroy success !\n");
-}
+Status InitList( IN LinkList &L);
+
+Status DestroyList( IN LinkList &L);
