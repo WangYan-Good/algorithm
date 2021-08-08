@@ -6,6 +6,7 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
+			<Script file="lib_finder.script" />
 			<Target title="Debug">
 				<Option output="bin/Debug/LinkList" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
@@ -32,6 +33,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Includes/LinkList.h" />
+		<Unit filename="Libraries/LinkList.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
