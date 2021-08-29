@@ -34,13 +34,31 @@ class Solution {
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
         vector<vector<int>> result;
-        int depth = 0;
 
         if(!root) return result;
+
         queue<TreeNode*> q;
         q.push(root);
+        
         while( !q.empty() ) {
-            
+            int sz = q.size();
+            vector<int> tp;  // for storing the current level nodes
+
+            while( sz > 0 ) {
+                TreeNode * p = q.front();
+                q.pop();
+
+                if( p->left != NULL ) {  // p.left is not null
+                    q.push(p->left);
+                }
+
+                if( p->right != NULL ) { // p.right is not null
+                    q.push(p->right);
+                }
+
+                tp.push_back(p->val); // input the value into 
+                sz--;
+            }
         }
     }
 };
