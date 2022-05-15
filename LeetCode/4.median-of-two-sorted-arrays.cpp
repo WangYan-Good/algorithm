@@ -40,7 +40,7 @@ public:
             if (flag) {
                 return (double)nums2[size/2];
             } else {
-                return ((double)(nums2[size/2]) + (double)(nums2[size/2 - 1]));
+                return ((double)(nums2[size/2]) + (double)(nums2[size/2 - 1]))/2;
             }
         }
 
@@ -48,34 +48,134 @@ public:
             if (flag) {
                 return (double)nums1[size/2];
             } else {
-                return ((double)(nums1[size/2]) + (double)(nums1[size/2 - 1]));
+                return ((double)(nums1[size/2]) + (double)(nums1[size/2 - 1]))/2;
             }
         }
 
         if (!nums1.empty() && !nums2.empty()) { // nums1 is not empty & nums2 is not empty
             // median = nums1[0] < nums2[0] ? nums1[0] : nums2[0];
-            vector<int>::iterator inums1 = nums1.begin();
-            vector<int>::iterator inums2 = nums2.begin();
+            vector<int>::iterator pre = *nums1.begin() <= *nums2.begin() ? nums1.begin() : nums2.begin();
+            vector<int>::iterator aft = pre == nums1.begin() ? nums2.begin() : nums1.begin();
+            vector<int>::iterator temp;
+            vector<int>::iterator preend = pre == nums1.begin() ? nums1.end() : nums2.end();
+            vector<int>::iterator aftend = aft == nums2.begin() ? nums2.end() : nums1.end();
 
             // initial median
             pre_median = 0;
-            median = (*inums1 <= *inums2) ? *inums1 : *inums2;
+            median = *pre;
             while (index < size/2) {
-                index ++;
-                if (*inums1 <= *inums2) {
-                    if (inums1 < nums1.end()) {
-                        inums1++;
-                    }
-                } else {
-                    if (inums2 < nums2.end()) {
-                        inums2++;
-                    }
+
+                //
+                // pre <= pre.end <= aft <= aft.end()
+                //
+                if ((pre+1) == preend && (aft+1) == aftend) {
+                    pre_median = median;
+                    median = *aft;
+
+                    index++;
+                    continue;
                 }
-                pre_median = median;
-                median = (*inums1 <= *inums2)?(double)(*inums1):(double)(*inums2);
+
+                //
+                // pre <= pre.end() <= aft <= aft[1]
+                //
+                if ((aft+1) != aftend && (pre+1) == preend) {
+                    pre_median = median;
+                    median = *aft;
+                    aft++;
+                    
+                    index ++;
+                    continue;
+                }
+                
+                //
+                // pre <= aft <= aft[1] <= pre[1]
+                //
+                if ((aft+1) != aftend && (pre+1) != preend && aft[1] <= pre[1]) {
+                    pre_median = median;
+                    median = *aft;
+                    aft++;
+                    
+                    index ++;
+                    continue;
+                }
+
+                //
+                // pre <= pre[1] <= aft <= aft.end()
+                //
+                if ((pre+1) != preend && (aft+1) == aftend && pre[1] <= *aft) {
+                    pre++;
+                    pre_median = median;
+                    median = *pre;
+                    
+                    index ++;
+                    continue;
+                }
+                
+                //
+                // pre <= pre[1] <= aft <= aft[1]
+                //
+                if ((aft+1) != aftend && (pre+1) != preend && pre[1] <= *aft) {
+                    pre++;
+                    pre_median = median;
+                    median = *pre;
+                    
+                    index ++;
+                    continue;
+                }
+
+                //
+                // pre <= aft <= pre[1] <= aft.end()
+                //
+                if ((aft+1) == aftend && (pre+1) != preend && *aft <= pre[1]) {
+                    pre++;
+
+                    // swap pre & aft
+                    temp = pre;
+                    pre = aft;
+                    aft = temp;
+
+                    // swap preend & aftend
+                    temp = preend;
+                    preend = aftend;
+                    aftend = temp;
+
+                    // pre_median = smaller between pre and aft
+                    pre_median = median;
+                    median = *pre;
+                    
+                    index ++;
+                    continue;
+                }
+                
+                //
+                // pre <= aft <= pre[1] <= aft[1]
+                //
+                if ((aft+1) != aftend && (pre+1) != preend && *aft <= pre[1] && pre[1] <= aft[1]) {
+                    pre++;
+
+                    // swap pre & aft
+                    temp = pre;
+                    pre = aft;
+                    aft = temp;
+
+                    // swap preend & aftend
+                    temp = preend;
+                    preend = aftend;
+                    aftend = temp;
+
+                    // pre_median = smaller between pre and aft
+                    pre_median = median;
+                    median = *pre;
+                    
+                    index ++;
+                    continue;
+                }
+
             }
+
             if (!flag) {
-                median = (median + pre_median)/2;
+                return (double)(median+pre_median)/2;
             }
             return median;
         }
