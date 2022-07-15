@@ -22,7 +22,12 @@ public:
         if (x < 0) return false;
 
         //
-        // x >= 0
+        // x = 0
+        //
+        if (x == 0) return true;
+
+        //
+        // x > 0
         //
         while (x != 0) {
             remainder = x%10;
@@ -34,7 +39,17 @@ public:
         // initialize ipre
         //
         ipre = single.begin();
-        ilate = single.end();
+        ilate = single.end() - 1;
+
+        while (ipre < ilate) {
+            if (*ipre != *ilate) {
+                return false;
+            } else {
+                ipre++;
+                ilate--;
+            }
+        }
+        return true;
     }
 };
 // @lc code=end
